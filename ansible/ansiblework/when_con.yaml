@@ -1,0 +1,19 @@
+---
+- hosts: lamp
+  name: "test when"
+  vars:
+    - "max_memory": 1024
+    - "min_memory": 128
+    - "city": london
+    - users:
+        db_admin : ["venkat", "tejas", "ravi"]
+        admind: ["arvind", "ramu", "prasad"]
+  tasks:
+    - name:
+      debug:
+        msg: "{{max_memory}} = 1024"
+      when: max_memory == 1024 or city == london
+    - name:
+      template:
+        src: "motd.j2"
+        dest: "/etc/motd"

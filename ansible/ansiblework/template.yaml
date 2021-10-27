@@ -1,0 +1,17 @@
+---
+- hosts: lamp
+  name:  install
+#  gather_facts: false
+  tasks:
+    - name: Install packages
+#      yum: name={{item}} state=latest
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+      - httpd
+      - vsftpd
+      - nmap
+      - net-tools
+      - samba
+

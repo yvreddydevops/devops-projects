@@ -1,0 +1,20 @@
+---
+- name: " install  httpd "
+  yum:
+    name: '{{ ansible_facts["ansible_local"]["custom"]["package"]["web_package"] }}'
+    state: present
+- name: " start the httpd service"
+  systemd:
+    name: '{{ ansible_facts["ansible_local"]["custom"]["service"]["web_service"] }}'
+    state: started
+    enabled: true
+
+- name: " install  mariadb "
+  yum:
+    name: '{{ ansible_facts["ansible_local"]["custom"]["package"]["db_bpackage"] }}'
+    state: present
+- name: " start the mariadb service"
+  systemd:
+    name: '{{ ansible_facts["ansible_local"]["custom"]["service"]["db_service"] }}'
+    state: started
+    enabled: true

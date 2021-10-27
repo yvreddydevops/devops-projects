@@ -1,0 +1,77 @@
+---
+
+- name: "Install amazon-linux-extras lamp-mariadb10.2-php7.2 php7.2"
+  shell: "{{php72}}"
+  changed_when: false
+
+- name: "install  apache packages and mariadb"
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - httpd
+    - mariadb-server
+    - php-mysqlnd
+    - MySQL-python
+    - mod_ssl
+
+
+- name: Add the user 'ec2-user' to the group of 'apache'
+  user:
+    name: ec2-user
+    group: apache
+
+- name: " sudo chown -R ec2-user:apache /var/www "
+  file:
+    path: /var/www
+    state: directory
+    recurse: true
+    owner: ec2-user
+    group: apache
+#  changed_when: false
+
+
+- name: "Recursively find /var/www dir"
+  file:
+    path: /var/www
+    state: directory
+    recurse: true
+    mode: '2775'
+# changed_when: false
+
+#- name: "Recursively find /var/www files "
+#  file:
+#    path: /var/www/html/phpinfo.php
+#    state: file
+#    recurse: true
+#    mode: '0664'
+#    owner: ec2-user
+#  tags:
+#    - file_per
+
+- name: "Generate index html"
+  copy:
+    content: " <?php phpinfo(); ?> "
+    dest: "{{dir_html}}/phpinfo.php"
+
+- name: "Generate index html"
+  copy:
+    content: " This is to test http "
+    dest: "{{dir_html}}/index.html"
+
+- name: " start the httpd and mariadb service"
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  with_items:
+    - httpd
+    - mariadb
+
+
+
+
+
+
+
+

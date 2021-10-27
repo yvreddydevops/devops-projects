@@ -1,0 +1,20 @@
+---
+- hosts: lamp
+  name: " Install and start services"
+  tasks:
+    - name: " Include copy_facts.yaml "
+      include: copy_facts.yaml
+
+    - name: " Include lamp.yaml "
+      include: tasks/lamp.yaml
+
+  handlers:
+    - name: "restartservice"
+      service:
+        name: "{{ ansible_local.custom.service.web_service}}"
+        state: restarted
+
+
+
+
+

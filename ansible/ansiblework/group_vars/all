@@ -1,0 +1,4 @@
+remote_dir : /etc/ansible/facts.d
+fact_file : custom.fact
+firewalld_package : firewalld.noarch
+firewalld_service : firewalld

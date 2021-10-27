@@ -1,0 +1,31 @@
+---
+- hosts: file
+  name:
+  tasks:
+    - name: " create users and add to the groups"
+      user:
+        name: "{{item.name}}"
+        groups: "{{item.groups}}"
+        append: true
+#        state: absent
+      with_items:
+        - name: "linda"
+          groups: "wheel"
+        - name: "lisa"
+          groups: "root"
+
+    - name: " create 3 groups"
+      group:
+        name: "{{item}}"
+      with_items:
+        - ["clientdb", "employeedb", "providerdb"]
+    - name: " add userd other 3 groups"
+      user:
+        name: "{{item[0]}}"
+        groups: "{{item[1]}}"
+        append: true
+#       state: absent
+      with_nested:
+        - ["linda", "lisa"]
+        - ["clientdb", "employeedb", "providerdb"]
+

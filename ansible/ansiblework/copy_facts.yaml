@@ -1,0 +1,12 @@
+---
+- hosts: all
+  name: " copy custom.fact to all hosts"
+  tasks:
+    - name: " create a custom facts dir"
+      file:
+        path: "{{remote_dir}}"
+        state: directory
+    - name: " copy facts to AWS"
+      copy:
+        src: "{{fact_file}}"
+        dest: "{{remote_dir}}"

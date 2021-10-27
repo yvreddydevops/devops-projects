@@ -1,0 +1,9 @@
+[lamp]
+ansible1
+
+[file]
+ansible2
+
+[all]
+ansible1
+ansible2

@@ -1,0 +1,15 @@
+<VirtualHost *:443>
+        DocumentRoot    /var/www/html/secure
+        ServerName      example.server.com
+        SSLEngine       on
+        SSLProtocol     all -SSLv2 -SSLv3
+        SSLCiphersuite HIGH:MEDIUM:!aNULL:!MD5
+        SSLCertificateFile      /etc/pki/tls/certs/server1.crt
+        SSLCertificateKeyFile   /etc/pki/tls/private/server1.key
+        DirectoryIndex index.html
+</VirtualHost>
+
+<Directory /var/www/html/secure>
+Require all granted
+</Directory>
+
