@@ -1,5 +1,1 @@
-# devops-projects
-devops-projects
-ci-jenkins
-kubernetes 
-kubernetes- prometheous and grafana
+This project is about Deploying Resources on AWS using Terraform and then deploying a Jenkins CI/CD pipeline.
