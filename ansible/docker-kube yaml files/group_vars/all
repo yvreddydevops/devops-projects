@@ -1,9 +1,0 @@
-daemon_json : daemon.j2
-etc_hosts : hosts.j2
-url_repo: https://download.docker.com/linux/centos/docker-ce.repo
-dir_docker : /etc/docker
-control_ip : 192.168.33.13
-worker1_ip : 192.168.33.14
-worker2_ip : 192.168.33.15
-worker3_ip : 192.168.33.16
-
