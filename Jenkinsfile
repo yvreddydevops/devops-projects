@@ -1,33 +1,26 @@
 pipeline {
-    agent any
-
-    parameters {
+  agent any
+  
+      parameters {
         string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy Terraform build?')
-
     }
-
-
      environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
-
-
-    stages {
-        stage('checkout') {
-            steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/yvreddydevops/devops-projects.git"
-                        }
-                    }
-                }
-            }
-
-        stage('Plan') {
+ tools {
+  terraform 'terraform'
+}
+  stages {
+    stage('Git Checkout') {
+      steps {
+        git branch: 'main', credentialsId: 'GIT_HUB', url: 'https://github.com/yvreddydevops/devops-projects'
+      }
+    }
+    
+    stage('Plan') {
             when {
                 not {
                     equals expected: true, actual: params.destroy
@@ -51,11 +44,8 @@ pipeline {
                     equals expected: true, actual: params.destroy
                 }
            }
-           
-                
-            
-
-           steps {
+   
+     steps {
                script {
                     def plan = readFile 'tfplan.txt'
                     input message: "Do you want to apply the plan?",
@@ -86,5 +76,5 @@ pipeline {
         }
     }
 
-  }
+}
 }
